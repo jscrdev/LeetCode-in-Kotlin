@@ -34,42 +34,7 @@ class Solution {
                 tree[size + i]!![YY] = nums[i].toLong()
             }
             for (i in size - 1 downTo 1) {
-                tree[i]!![YY] = max(
-                    (tree[2 * i]!![YY] + tree[2 * i + 1]!![NY]),
-                    (
-                        tree[2 * i]!![YN] + max(
-                            tree[2 * i + 1]!![YY],
-                            tree[2 * i + 1]!![NY]
-                        )
-                        )
-                )
-                tree[i]!![YN] = max(
-                    (tree[2 * i]!![YY] + tree[2 * i + 1]!![NN]),
-                    (
-                        tree[2 * i]!![YN] + max(
-                            tree[2 * i + 1]!![YN],
-                            tree[2 * i + 1]!![NN]
-                        )
-                        )
-                )
-                tree[i]!![NY] = max(
-                    (tree[2 * i]!![NY] + tree[2 * i + 1]!![NY]),
-                    (
-                        tree[2 * i]!![NN] + max(
-                            tree[2 * i + 1]!![YY],
-                            tree[2 * i + 1]!![NY]
-                        )
-                        )
-                )
-                tree[i]!![NN] = max(
-                    (tree[2 * i]!![NY] + tree[2 * i + 1]!![NN]),
-                    (
-                        tree[2 * i]!![NN] + max(
-                            tree[2 * i + 1]!![YN],
-                            tree[2 * i + 1]!![NN]
-                        )
-                        )
-                )
+                updateTree(tree, i)
             }
             return tree
         }
@@ -79,47 +44,51 @@ class Solution {
             tree[size + idx]!![YY] = `val`.toLong()
             var i = (size + idx) / 2
             while (i > 0) {
-                tree[i]!![YY] = max(
-                    (tree[2 * i]!![YY] + tree[2 * i + 1]!![NY]),
-                    (
-                        tree[2 * i]!![YN] + max(
-                            tree[2 * i + 1]!![YY],
-                            tree[2 * i + 1]!![NY]
-                        )
-                        )
-                )
-                tree[i]!![YN] = max(
-                    (tree[2 * i]!![YY] + tree[2 * i + 1]!![NN]),
-                    (
-                        tree[2 * i]!![YN] + max(
-                            tree[2 * i + 1]!![YN],
-                            tree[2 * i + 1]!![NN]
-                        )
-                        )
-                )
-                tree[i]!![NY] = max(
-                    (tree[2 * i]!![NY] + tree[2 * i + 1]!![NY]),
-                    (
-                        tree[2 * i]!![NN] + max(
-                            tree[2 * i + 1]!![YY],
-                            tree[2 * i + 1]!![NY]
-                        )
-                        )
-                )
-                tree[i]!![NN] = max(
-                    (tree[2 * i]!![NY] + tree[2 * i + 1]!![NN]),
-                    (
-                        tree[2 * i]!![NN] + max(
-                            tree[2 * i + 1]!![YN],
-                            tree[2 * i + 1]!![NN]
-                        )
-                        )
-                )
+                updateTree(tree, i)
                 i /= 2
             }
             return max(
                 tree[1]!![YY],
                 max(tree[1]!![YN], max(tree[1]!![NY], tree[1]!![NN]))
+            )
+        }
+
+        private fun updateTree(tree: Array<LongArray?>, i: Int) {
+            tree[i]!![YY] = max(
+                (tree[2 * i]!![YY] + tree[2 * i + 1]!![NY]),
+                (
+                    tree[2 * i]!![YN] + max(
+                        tree[2 * i + 1]!![YY],
+                        tree[2 * i + 1]!![NY]
+                    )
+                    )
+            )
+            tree[i]!![YN] = max(
+                (tree[2 * i]!![YY] + tree[2 * i + 1]!![NN]),
+                (
+                    tree[2 * i]!![YN] + max(
+                        tree[2 * i + 1]!![YN],
+                        tree[2 * i + 1]!![NN]
+                    )
+                    )
+            )
+            tree[i]!![NY] = max(
+                (tree[2 * i]!![NY] + tree[2 * i + 1]!![NY]),
+                (
+                    tree[2 * i]!![NN] + max(
+                        tree[2 * i + 1]!![YY],
+                        tree[2 * i + 1]!![NY]
+                    )
+                    )
+            )
+            tree[i]!![NN] = max(
+                (tree[2 * i]!![NY] + tree[2 * i + 1]!![NN]),
+                (
+                    tree[2 * i]!![NN] + max(
+                        tree[2 * i + 1]!![YN],
+                        tree[2 * i + 1]!![NN]
+                    )
+                    )
             )
         }
     }
